@@ -1,69 +1,73 @@
 CoD.GameOptions = {}
-CoD.GameOptionsMenu = InheritFrom( CoD.Menu )
-local f0_local0 = function ( f1_arg0, f1_arg1 )
+CoD.GameOptionsMenu = InheritFrom(CoD.Menu)
+local f0_local0 = function(f1_arg0, f1_arg1)
 	local f1_local0 = f1_arg0.parentSelectorButton
 	if f1_arg1 then
 		if f1_arg0.value == 0 then
-			Engine.SetGametypeSetting( "allowKillcam", Engine.GetGametypeSetting( "allowKillcam", true ) )
-			Engine.SetGametypeSetting( "forceRadar", Engine.GetGametypeSetting( "forceRadar", true ) )
-			Engine.SetGametypeSetting( "playerMaxHealth", Engine.GetGametypeSetting( "playerMaxHealth", true ) )
-			Engine.SetGametypeSetting( "playerHealthRegenTime", Engine.GetGametypeSetting( "playerHealthRegenTime", true ) )
-			Engine.SetGametypeSetting( "friendlyfiretype", Engine.GetGametypeSetting( "friendlyfiretype", true ) )
-			Engine.SetGametypeSetting( "teamKillPunishCount", Engine.GetGametypeSetting( "teamKillPunishCount", true ) )
-			Engine.SetGametypeSetting( "playerRespawnDelay", Engine.GetGametypeSetting( "playerRespawnDelay", true ) )
+			Engine.SetGametypeSetting("allowKillcam", Engine.GetGametypeSetting("allowKillcam", true))
+			Engine.SetGametypeSetting("forceRadar", Engine.GetGametypeSetting("forceRadar", true))
+			Engine.SetGametypeSetting("playerMaxHealth", Engine.GetGametypeSetting("playerMaxHealth", true))
+			Engine.SetGametypeSetting("playerHealthRegenTime", Engine.GetGametypeSetting("playerHealthRegenTime", true))
+			Engine.SetGametypeSetting("friendlyfiretype", Engine.GetGametypeSetting("friendlyfiretype", true))
+			Engine.SetGametypeSetting("teamKillPunishCount", Engine.GetGametypeSetting("teamKillPunishCount", true))
+			Engine.SetGametypeSetting("playerRespawnDelay", Engine.GetGametypeSetting("playerRespawnDelay", true))
 		else
-			Engine.SetGametypeSetting( "allowKillcam", 0 )
-			Engine.SetGametypeSetting( "forceRadar", 0 )
-			Engine.SetGametypeSetting( "playerMaxHealth", 30 )
-			Engine.SetGametypeSetting( "playerHealthRegenTime", 0 )
-			Engine.SetGametypeSetting( "friendlyfiretype", 1 )
-			Engine.SetGametypeSetting( "teamKillPunishCount", 3 )
-			Engine.SetGametypeSetting( "playerRespawnDelay", 7 )
+			Engine.SetGametypeSetting("allowKillcam", 0)
+			Engine.SetGametypeSetting("forceRadar", 0)
+			Engine.SetGametypeSetting("playerMaxHealth", 30)
+			Engine.SetGametypeSetting("playerHealthRegenTime", 0)
+			Engine.SetGametypeSetting("friendlyfiretype", 1)
+			Engine.SetGametypeSetting("teamKillPunishCount", 3)
+			Engine.SetGametypeSetting("playerRespawnDelay", 7)
 		end
-		CoD.GametypeSettingLeftRightSelector.SelectionChanged( f1_arg0 )
-		f1_local0:dispatchEventToParent( {
-			name = "refresh_settings"
-		} )
+		CoD.GametypeSettingLeftRightSelector.SelectionChanged(f1_arg0)
+		f1_local0:dispatchEventToParent(
+			{
+				name = "refresh_settings"
+			}
+		)
 	else
-		CoD.GametypeSettingLeftRightSelector.SelectionChanged( f1_arg0 )
+		CoD.GametypeSettingLeftRightSelector.SelectionChanged(f1_arg0)
 	end
 end
 
-local f0_local1 = function ( f2_arg0, f2_arg1 )
+local f0_local1 = function(f2_arg0, f2_arg1)
 	local f2_local0 = f2_arg0.parentSelectorButton
 	if f2_arg1 then
 		if f2_arg0.value == 0 then
-			Engine.SetGametypeSetting( "roundLimit", 0 )
-			Engine.SetGametypeSetting( "roundWinLimit", 2 )
-			Engine.SetGametypeSetting( "scoreLimit", 3 )
+			Engine.SetGametypeSetting("roundLimit", 0)
+			Engine.SetGametypeSetting("roundWinLimit", 2)
+			Engine.SetGametypeSetting("scoreLimit", 3)
 		else
-			Engine.SetGametypeSetting( "roundLimit", 2 )
-			Engine.SetGametypeSetting( "roundWinLimit", 0 )
-			Engine.SetGametypeSetting( "scoreLimit", 0 )
+			Engine.SetGametypeSetting("roundLimit", 2)
+			Engine.SetGametypeSetting("roundWinLimit", 0)
+			Engine.SetGametypeSetting("scoreLimit", 0)
 		end
-		CoD.GametypeSettingLeftRightSelector.SelectionChanged( f2_arg0 )
-		f2_local0:dispatchEventToParent( {
-			name = "refresh_settings"
-		} )
+		CoD.GametypeSettingLeftRightSelector.SelectionChanged(f2_arg0)
+		f2_local0:dispatchEventToParent(
+			{
+				name = "refresh_settings"
+			}
+		)
 	else
-		CoD.GametypeSettingLeftRightSelector.SelectionChanged( f2_arg0 )
+		CoD.GametypeSettingLeftRightSelector.SelectionChanged(f2_arg0)
 	end
 end
 
-local f0_local2 = function ()
-	return Engine.GetGametypeSetting( "roundscorecarry" ) == 1
+local f0_local2 = function()
+	return Engine.GetGametypeSetting("roundscorecarry") == 1
 end
 
-local f0_local3 = function ()
-	return Engine.GetGametypeSetting( "roundscorecarry" ) == 0
+local f0_local3 = function()
+	return Engine.GetGametypeSetting("roundscorecarry") == 0
 end
 
-local f0_local4 = function ()
-	return Engine.GetGametypeSetting( "loadoutKillstreaksEnabled", true ) == 1
+local f0_local4 = function()
+	return Engine.GetGametypeSetting("loadoutKillstreaksEnabled", true) == 1
 end
 
-local f0_local5 = function ()
-	return Engine.GetGametypeSetting( "disableCAC" ) == 0
+local f0_local5 = function()
+	return Engine.GetGametypeSetting("disableCAC") == 0
 end
 
 CoD.GameOptions.OffOnLabels = {
@@ -1829,44 +1833,55 @@ CoD.GameOptions.SubLevelGametypeSettings = {
 		"roundLimit"
 	}
 }
-CoD.GameOptions.ShowStarForGametypeSettings = function ( f7_arg0, f7_arg1 )
-	for f7_local4, f7_local3 in ipairs( f7_arg1 ) do
+CoD.GameOptions.ShowStarForGametypeSettings = function(f7_arg0, f7_arg1)
+	for f7_local4, f7_local3 in ipairs(f7_arg1) do
 		local f7_local5 = CoD.GameOptions.GameSettings[f7_local3]
 		if not f7_local5.shouldShow or f7_local5.shouldShow() then
 			if f7_local5.setting then
 				f7_local3 = f7_local5.setting
 			end
-			if not Engine.IsGametypeSettingDefault( f7_local3 ) then
-				f7_arg0:showStarIcon( true )
+			if not Engine.IsGametypeSettingDefault(f7_local3) then
+				f7_arg0:showStarIcon(true)
 				return true
 			end
 		end
 	end
-	f7_arg0:showStarIcon( false )
+	f7_arg0:showStarIcon(false)
 	return false
 end
 
-CoD.GameOptions.Button_AddChoices = function ( f8_arg0, f8_arg1, f8_arg2, f8_arg3 )
+CoD.GameOptions.Button_AddChoices = function(f8_arg0, f8_arg1, f8_arg2, f8_arg3)
 	if f8_arg2 == nil or #f8_arg2 == 0 then
-		return 
+		return
 	end
 	for f8_local0 = 1, #f8_arg2, 1 do
-		f8_arg1:addChoice( f8_arg0, Engine.Localize( f8_arg2[f8_local0] ), f8_arg3[f8_local0] )
+		f8_arg1:addChoice(f8_arg0, Engine.Localize(f8_arg2[f8_local0]), f8_arg3[f8_local0])
 	end
 end
 
-CoD.GameOptions.AddSelectorButtons = function ( f9_arg0, f9_arg1, f9_arg2, f9_arg3 )
+CoD.GameOptions.AddSelectorButtons = function(f9_arg0, f9_arg1, f9_arg2, f9_arg3)
 	if f9_arg2 == nil or #f9_arg2 == 0 then
 		return 0
 	end
 	for f9_local0 = 1, #f9_arg2, 1 do
 		local f9_local3 = nil
 		if f9_arg2[f9_local0].hintText ~= nil then
-			f9_local3 = f9_arg0.buttonList:addGametypeSettingLeftRightSelector( f9_arg1, Engine.Localize( f9_arg2[f9_local0].label ), f9_arg2[f9_local0].settingName, Engine.Localize( f9_arg2[f9_local0].hintText ) )
+			f9_local3 =
+				f9_arg0.buttonList:addGametypeSettingLeftRightSelector(
+				f9_arg1,
+				Engine.Localize(f9_arg2[f9_local0].label),
+				f9_arg2[f9_local0].settingName,
+				Engine.Localize(f9_arg2[f9_local0].hintText)
+			)
 		else
-			f9_local3 = f9_arg0.buttonList:addGametypeSettingLeftRightSelector( f9_arg1, Engine.Localize( f9_arg2[f9_local0].label ), f9_arg2[f9_local0].settingName )
+			f9_local3 =
+				f9_arg0.buttonList:addGametypeSettingLeftRightSelector(
+				f9_arg1,
+				Engine.Localize(f9_arg2[f9_local0].label),
+				f9_arg2[f9_local0].settingName
+			)
 		end
-		CoD.GameOptions.Button_AddChoices( f9_arg1, f9_local3, f9_arg2[f9_local0].strings, f9_arg2[f9_local0].values )
+		CoD.GameOptions.Button_AddChoices(f9_arg1, f9_local3, f9_arg2[f9_local0].strings, f9_arg2[f9_local0].values)
 		if f9_arg3 == false then
 			f9_local3:disableCycling()
 		end
@@ -1874,22 +1889,27 @@ CoD.GameOptions.AddSelectorButtons = function ( f9_arg0, f9_arg1, f9_arg2, f9_ar
 	return #f9_arg2
 end
 
-CoD.GameOptions.Button_DemoRecording_AddChoices = function ( f10_arg0, f10_arg1 )
-	CoD.GameOptions.Button_AddChoices( f10_arg1, f10_arg0, {
-		"MENU_DISABLED_CAPS",
-		"MENU_ENABLED_CAPS"
-	}, {
-		0,
-		1
-	} )
+CoD.GameOptions.Button_DemoRecording_AddChoices = function(f10_arg0, f10_arg1)
+	CoD.GameOptions.Button_AddChoices(
+		f10_arg1,
+		f10_arg0,
+		{
+			"MENU_DISABLED_CAPS",
+			"MENU_ENABLED_CAPS"
+		},
+		{
+			0,
+			1
+		}
+	)
 end
 
-CoD.GameOptions.Button_Bot_SelectionChanged = function ( f11_arg0 )
-	Engine.SetDvar( f11_arg0.parentSelectorButton.m_dvarName, f11_arg0.value )
-	local f11_local0 = UIExpression.DvarInt( nil, "bot_friends" )
-	local f11_local1 = UIExpression.DvarInt( nil, "bot_enemies" )
+CoD.GameOptions.Button_Bot_SelectionChanged = function(f11_arg0)
+	Engine.SetDvar(f11_arg0.parentSelectorButton.m_dvarName, f11_arg0.value)
+	local f11_local0 = UIExpression.DvarInt(nil, "bot_friends")
+	local f11_local1 = UIExpression.DvarInt(nil, "bot_enemies")
 	local f11_local2 = 11
-	if Engine.GameModeIsMode( CoD.GAMEMODE_LOCAL_SPLITSCREEN ) then
+	if Engine.GameModeIsMode(CoD.GAMEMODE_LOCAL_SPLITSCREEN) then
 		f11_local2 = 9
 	end
 	if f11_local2 < f11_local0 + f11_local1 then
@@ -1908,7 +1928,7 @@ CoD.GameOptions.Button_Bot_SelectionChanged = function ( f11_arg0 )
 	end
 end
 
-CoD.GameOptions.Button_Bots_AddChoices = function ( f12_arg0, f12_arg1, f12_arg2, f12_arg3 )
+CoD.GameOptions.Button_Bots_AddChoices = function(f12_arg0, f12_arg1, f12_arg2, f12_arg3)
 	local f12_local0 = {
 		"MPUI_0_BOTS",
 		"MPUI_1_BOTS",
@@ -1937,51 +1957,80 @@ CoD.GameOptions.Button_Bots_AddChoices = function ( f12_arg0, f12_arg1, f12_arg2
 		10,
 		11
 	}
-	local f12_local2 = UIExpression.DvarString( nil, "ui_gameType" )
+	local f12_local2 = UIExpression.DvarString(nil, "ui_gameType")
 	local f12_local3 = #f12_local0
-	if Engine.GameModeIsMode( CoD.GAMEMODE_LOCAL_SPLITSCREEN ) or f12_local2 ~= "dm" then
+	if Engine.GameModeIsMode(CoD.GAMEMODE_LOCAL_SPLITSCREEN) or f12_local2 ~= "dm" then
 		f12_local3 = 10
 	end
 	if f12_arg0.m_dvarName == "bot_friends" then
 		f12_local3 = 9
 	end
 	for f12_local4 = 1, f12_local3, 1 do
-		f12_arg0:addChoice( f12_arg2, Engine.Localize( f12_local0[f12_local4] ), f12_local1[f12_local4], {
-			otherButton = f12_arg1
-		}, CoD.GameOptions.Button_Bot_SelectionChanged )
+		f12_arg0:addChoice(
+			f12_arg2,
+			Engine.Localize(f12_local0[f12_local4]),
+			f12_local1[f12_local4],
+			{
+				otherButton = f12_arg1
+			},
+			CoD.GameOptions.Button_Bot_SelectionChanged
+		)
 	end
 	if f12_arg3 == false then
 		f12_arg0:disableCycling()
 	end
 end
 
-CoD.GameOptions.Button_BotDifficulty_AddChoices = function ( f13_arg0, f13_arg1, f13_arg2 )
-	CoD.GameOptions.Button_AddChoices( f13_arg1, f13_arg0, {
-		"MENU_BASICTRAINING_EASY_CAPS",
-		"MENU_BASICTRAINING_NORMAL_CAPS",
-		"MENU_BASICTRAINING_HARD_CAPS",
-		"MENU_BASICTRAINING_FU_CAPS"
-	}, {
-		0,
-		1,
-		2,
-		3
-	} )
+CoD.GameOptions.Button_BotDifficulty_AddChoices = function(f13_arg0, f13_arg1, f13_arg2)
+	CoD.GameOptions.Button_AddChoices(
+		f13_arg1,
+		f13_arg0,
+		{
+			"MENU_BASICTRAINING_EASY_CAPS",
+			"MENU_BASICTRAINING_NORMAL_CAPS",
+			"MENU_BASICTRAINING_HARD_CAPS",
+			"MENU_BASICTRAINING_FU_CAPS"
+		},
+		{
+			0,
+			1,
+			2,
+			3
+		}
+	)
 	if f13_arg2 == false then
 		f13_arg0:disableCycling()
 	end
 end
 
-CoD.GameOptions.AddBotSpecificOptions = function ( f14_arg0, f14_arg1, f14_arg2 )
-	f14_arg0.friendsButton = f14_arg0.buttonList:addDvarLeftRightSelector( f14_arg1, Engine.Localize( "MPUI_FRIENDLY_PRACTICE_DUMMIES_CAPS" ), "bot_friends", Engine.Localize( "MENU_FRIENDLY_BOTS" ) )
-	f14_arg0.enemiesButton = f14_arg0.buttonList:addDvarLeftRightSelector( f14_arg1, Engine.Localize( "MPUI_ENEMY_PRACTICE_DUMMIES_CAPS" ), "bot_enemies", Engine.Localize( "MENU_ENEMY_BOTS" ) )
-	CoD.GameOptions.Button_Bots_AddChoices( f14_arg0.friendsButton, f14_arg0.enemiesButton, f14_arg1, f14_arg2 )
-	CoD.GameOptions.Button_Bots_AddChoices( f14_arg0.enemiesButton, f14_arg0.friendsButton, f14_arg1, f14_arg2 )
-	f14_arg0.difficultyButton = f14_arg0.buttonList:addDvarLeftRightSelector( f14_arg1, Engine.Localize( "MENU_BASICTRAINING_DIFFICULTY_CAPS" ), "bot_difficulty", Engine.Localize( "MENU_BOT_DIFFICULTY" ) )
-	CoD.GameOptions.Button_BotDifficulty_AddChoices( f14_arg0.difficultyButton, f14_arg1 )
+CoD.GameOptions.AddBotSpecificOptions = function(f14_arg0, f14_arg1, f14_arg2)
+	f14_arg0.friendsButton =
+		f14_arg0.buttonList:addDvarLeftRightSelector(
+		f14_arg1,
+		Engine.Localize("MPUI_FRIENDLY_PRACTICE_DUMMIES_CAPS"),
+		"bot_friends",
+		Engine.Localize("MENU_FRIENDLY_BOTS")
+	)
+	f14_arg0.enemiesButton =
+		f14_arg0.buttonList:addDvarLeftRightSelector(
+		f14_arg1,
+		Engine.Localize("MPUI_ENEMY_PRACTICE_DUMMIES_CAPS"),
+		"bot_enemies",
+		Engine.Localize("MENU_ENEMY_BOTS")
+	)
+	CoD.GameOptions.Button_Bots_AddChoices(f14_arg0.friendsButton, f14_arg0.enemiesButton, f14_arg1, f14_arg2)
+	CoD.GameOptions.Button_Bots_AddChoices(f14_arg0.enemiesButton, f14_arg0.friendsButton, f14_arg1, f14_arg2)
+	f14_arg0.difficultyButton =
+		f14_arg0.buttonList:addDvarLeftRightSelector(
+		f14_arg1,
+		Engine.Localize("MENU_BASICTRAINING_DIFFICULTY_CAPS"),
+		"bot_difficulty",
+		Engine.Localize("MENU_BOT_DIFFICULTY")
+	)
+	CoD.GameOptions.Button_BotDifficulty_AddChoices(f14_arg0.difficultyButton, f14_arg1)
 end
 
-CoD.GameOptions.Button_EnabledDisabled_AddChoices = function ( f15_arg0, f15_arg1, f15_arg2, f15_arg3 )
+CoD.GameOptions.Button_EnabledDisabled_AddChoices = function(f15_arg0, f15_arg1, f15_arg2, f15_arg3)
 	local f15_local0 = {
 		"MENU_DISABLED_CAPS",
 		"MENU_ENABLED_CAPS"
@@ -1990,165 +2039,199 @@ CoD.GameOptions.Button_EnabledDisabled_AddChoices = function ( f15_arg0, f15_arg
 		0,
 		1
 	}
-	local f15_local2 = f15_arg0.buttonList:addGametypeSettingLeftRightSelector( f15_arg1, Engine.Localize( f15_arg2 ), f15_arg3 )
-	CoD.GameOptions.Button_AddChoices( f15_arg1, f15_local2, f15_local0, f15_local1 )
+	local f15_local2 =
+		f15_arg0.buttonList:addGametypeSettingLeftRightSelector(f15_arg1, Engine.Localize(f15_arg2), f15_arg3)
+	CoD.GameOptions.Button_AddChoices(f15_arg1, f15_local2, f15_local0, f15_local1)
 	return f15_local2
 end
 
-CoD.GameOptions.AreAnyAttachmentsRestricted = function ()
-	local f16_local0 = 1
+CoD.GameOptions.AreAnyAttachmentsRestricted = function()
+	local count = 1
+
 	while true do
-		if UIExpression.GetAttachmentName( controller, f16_local0 ) == "" then
-			
-		elseif Engine.GetAttachmentAllocationCost( f16_local0 ) >= 0 and Engine.IsAttachmentIndexRestricted( f16_local0 ) ~= Engine.IsAttachmentIndexRestricted( f16_local0, true ) then
+		if UIExpression.GetAttachmentName(controller, count) == "" then
+		elseif Engine.GetAttachmentAllocationCost(count) >= 0 and Engine.IsAttachmentIndexRestricted(count) ~= Engine.IsAttachmentIndexRestricted(count, true) then
 			return true
 		end
-		f16_local0 = f16_local0 + 1
+		count = count + 1
 	end
 end
 
-CoD.GameOptionsMenu.New = function ( f17_arg0, f17_arg1 )
-	local f17_local0 = CoD.Menu.New( f17_arg1 )
-	f17_local0:setClass( CoD.GameOptionsMenu )
-	f17_local0:setOwner( f17_arg0 )
+CoD.GameOptionsMenu.New = function(f17_arg0, f17_arg1)
+	local f17_local0 = CoD.Menu.New(f17_arg1)
+	f17_local0:setClass(CoD.GameOptionsMenu)
+	f17_local0:setOwner(f17_arg0)
 	f17_local0:addLargePopupBackground()
 	f17_local0:addSelectButton()
 	f17_local0:addBackButton()
 	local f17_local1 = 325
 	f17_local0.infoPane = LUI.UIElement.new()
-	f17_local0.infoPane:setLeftRight( false, true, -f17_local1, 0 )
-	f17_local0.infoPane:setTopBottom( true, true, CoD.Menu.TitleHeight, 0 )
-	f17_local0:addElement( f17_local0.infoPane )
+	f17_local0.infoPane:setLeftRight(false, true, -f17_local1, 0)
+	f17_local0.infoPane:setTopBottom(true, true, CoD.Menu.TitleHeight, 0)
+	f17_local0:addElement(f17_local0.infoPane)
 	f17_local0.infoPaneTitle = LUI.UIText.new()
-	f17_local0.infoPaneTitle:setLeftRight( true, false, 0, 0 )
-	f17_local0.infoPaneTitle:setTopBottom( true, false, 0, CoD.textSize.Condensed )
-	f17_local0.infoPaneTitle:setRGB( CoD.offWhite.r, CoD.offWhite.g, CoD.offWhite.b )
-	f17_local0.infoPaneTitle:setFont( CoD.fonts.Condensed )
-	f17_local0.infoPane:addElement( f17_local0.infoPaneTitle )
+	f17_local0.infoPaneTitle:setLeftRight(true, false, 0, 0)
+	f17_local0.infoPaneTitle:setTopBottom(true, false, 0, CoD.textSize.Condensed)
+	f17_local0.infoPaneTitle:setRGB(CoD.offWhite.r, CoD.offWhite.g, CoD.offWhite.b)
+	f17_local0.infoPaneTitle:setFont(CoD.fonts.Condensed)
+	f17_local0.infoPane:addElement(f17_local0.infoPaneTitle)
 	f17_local0.infoPaneDefaultText = LUI.UIText.new()
-	f17_local0.infoPaneDefaultText:setLeftRight( true, false, 0, 0 )
-	f17_local0.infoPaneDefaultText:setTopBottom( true, false, 30, 30 + CoD.textSize.Default )
-	f17_local0.infoPaneDefaultText:setRGB( CoD.offWhite.r, CoD.offWhite.g, CoD.offWhite.b )
-	f17_local0.infoPaneDefaultText:setFont( CoD.fonts.Default )
-	f17_local0.infoPane:addElement( f17_local0.infoPaneDefaultText )
+	f17_local0.infoPaneDefaultText:setLeftRight(true, false, 0, 0)
+	f17_local0.infoPaneDefaultText:setTopBottom(true, false, 30, 30 + CoD.textSize.Default)
+	f17_local0.infoPaneDefaultText:setRGB(CoD.offWhite.r, CoD.offWhite.g, CoD.offWhite.b)
+	f17_local0.infoPaneDefaultText:setFont(CoD.fonts.Default)
+	f17_local0.infoPane:addElement(f17_local0.infoPaneDefaultText)
 	f17_local0.infoPaneDescription = LUI.UIText.new()
 	f17_local0.infoPaneDescription:setupUITextUncached()
-	f17_local0.infoPaneDescription:setLeftRight( true, true, 0, 0 )
-	f17_local0.infoPaneDescription:setTopBottom( true, false, 70, 70 + CoD.textSize.Default )
-	f17_local0.infoPaneDescription:setAlignment( LUI.Alignment.Left )
-	f17_local0.infoPaneDescription:setRGB( CoD.offWhite.r, CoD.offWhite.g, CoD.offWhite.b )
-	f17_local0.infoPaneDescription:setFont( CoD.fonts.Default )
-	f17_local0.infoPane:addElement( f17_local0.infoPaneDescription )
-	local f17_local2 = RegisterMaterial( UIExpression.TableLookup( f17_arg0, CoD.gametypesTable, 0, 0, 1, Dvar.ui_gametype:get(), 4 ) )
+	f17_local0.infoPaneDescription:setLeftRight(true, true, 0, 0)
+	f17_local0.infoPaneDescription:setTopBottom(true, false, 70, 70 + CoD.textSize.Default)
+	f17_local0.infoPaneDescription:setAlignment(LUI.Alignment.Left)
+	f17_local0.infoPaneDescription:setRGB(CoD.offWhite.r, CoD.offWhite.g, CoD.offWhite.b)
+	f17_local0.infoPaneDescription:setFont(CoD.fonts.Default)
+	f17_local0.infoPane:addElement(f17_local0.infoPaneDescription)
+	local f17_local2 =
+		RegisterMaterial(UIExpression.TableLookup(f17_arg0, CoD.gametypesTable, 0, 0, 1, Dvar.ui_gametype:get(), 4))
 	local f17_local3 = f17_local1
 	f17_local0.gametypeIcon = LUI.UIImage.new()
-	f17_local0.gametypeIcon:setLeftRight( false, false, -f17_local3 / 2, f17_local3 / 2 )
-	f17_local0.gametypeIcon:setTopBottom( false, false, -CoD.Menu.TitleHeight / 2 - f17_local3 / 2, -CoD.Menu.TitleHeight / 2 + f17_local3 / 2 )
-	f17_local0.gametypeIcon:setImage( f17_local2 )
-	f17_local0.gametypeIcon:setAlpha( 0.25 )
-	f17_local0.infoPane:addElement( f17_local0.gametypeIcon )
+	f17_local0.gametypeIcon:setLeftRight(false, false, -f17_local3 / 2, f17_local3 / 2)
+	f17_local0.gametypeIcon:setTopBottom(
+		false,
+		false,
+		-CoD.Menu.TitleHeight / 2 - f17_local3 / 2,
+		-CoD.Menu.TitleHeight / 2 + f17_local3 / 2
+	)
+	f17_local0.gametypeIcon:setImage(f17_local2)
+	f17_local0.gametypeIcon:setAlpha(0.25)
+	f17_local0.infoPane:addElement(f17_local0.gametypeIcon)
 	f17_local0.buttonList = CoD.ButtonList.new()
-	f17_local0.buttonList:setLeftRight( true, false, 0, CoD.ButtonList.DefaultWidth )
-	f17_local0.buttonList:setTopBottom( true, true, CoD.Menu.TitleHeight, 0 )
+	f17_local0.buttonList:setLeftRight(true, false, 0, CoD.ButtonList.DefaultWidth)
+	f17_local0.buttonList:setTopBottom(true, true, CoD.Menu.TitleHeight, 0)
 	f17_local0.buttonList.id = f17_local0.id .. "ButtonList"
 	f17_local0.buttonList.hintText:close()
-	f17_local0:addElement( f17_local0.buttonList )
+	f17_local0:addElement(f17_local0.buttonList)
 	if CoD.isPC then
-		f17_local0.buttonList:setLeftRight( true, false, 0, CoD.ButtonList.DefaultWidth + 100 )
+		f17_local0.buttonList:setLeftRight(true, false, 0, CoD.ButtonList.DefaultWidth + 100)
 	end
 	return f17_local0
 end
 
-CoD.GameOptionsMenu.addGametypeSetting = function ( f18_arg0, f18_arg1, f18_arg2, f18_arg3 )
+CoD.GameOptionsMenu.addGametypeSetting = function(f18_arg0, f18_arg1, f18_arg2, f18_arg3)
 	local f18_local0 = CoD.GameOptions.GameSettings[f18_arg2]
 	if not f18_arg3 and f18_local0.shouldShow and not f18_local0.shouldShow() then
-		return 
+		return
 	elseif f18_local0.setting then
 		f18_arg2 = f18_local0.setting
 	end
 	local f18_local1 = f18_local0.hintText
 	if f18_local1 then
-		f18_local1 = Engine.Localize( f18_local1 )
+		f18_local1 = Engine.Localize(f18_local1)
 	end
-	local f18_local2 = f18_arg0.buttonList:addGametypeSettingLeftRightSelector( f18_arg1, Engine.Localize( f18_local0.name ), f18_arg2, f18_local1 )
-	for f18_local7, f18_local8 in ipairs( f18_local0.values ) do
+	local f18_local2 =
+		f18_arg0.buttonList:addGametypeSettingLeftRightSelector(
+		f18_arg1,
+		Engine.Localize(f18_local0.name),
+		f18_arg2,
+		f18_local1
+	)
+	for f18_local7, f18_local8 in ipairs(f18_local0.values) do
 		local f18_local6 = f18_local8
 		if f18_local0.labels then
 			f18_local6 = f18_local0.labels[f18_local7]
 			if not f18_local6 then
 				f18_local6 = f18_local0.labels[#f18_local0.labels]
 			end
-			f18_local6 = Engine.Localize( f18_local6, f18_local8 )
+			f18_local6 = Engine.Localize(f18_local6, f18_local8)
 		end
-		f18_local2:addChoice( f18_arg1, f18_local6, f18_local8, nil, f18_local0.callback )
+		f18_local2:addChoice(f18_arg1, f18_local6, f18_local8, nil, f18_local0.callback)
 	end
 	return f18_local2
 end
 
-CoD.GameOptionsMenu.ButtonGainedFocus = function ( f19_arg0, f19_arg1 )
+CoD.GameOptionsMenu.ButtonGainedFocus = function(f19_arg0, f19_arg1)
 	local f19_local0 = f19_arg1.button
 	if f19_local0.labelString and (f19_local0.hintText or f19_local0.m_settingName) then
-		f19_arg0.infoPaneTitle:setText( f19_local0.labelString )
+		f19_arg0.infoPaneTitle:setText(f19_local0.labelString)
 	else
-		f19_arg0.infoPaneTitle:setText( "" )
+		f19_arg0.infoPaneTitle:setText("")
 	end
 	local f19_local1 = ""
 	if f19_local0.m_settingName then
-		local f19_local2 = Engine.GetGametypeSetting( f19_local0.m_settingName, true )
-		for f19_local6, f19_local7 in ipairs( f19_local0.m_choices ) do
+		local f19_local2 = Engine.GetGametypeSetting(f19_local0.m_settingName, true)
+		for f19_local6, f19_local7 in ipairs(f19_local0.m_choices) do
 			if f19_local7.params.value == f19_local2 then
-				f19_local1 = Engine.Localize( "MENU_DEFAULT" ) .. ": " .. f19_local7.label
+				f19_local1 = Engine.Localize("MENU_DEFAULT") .. ": " .. f19_local7.label
 				break
 			end
 		end
 	end
-	f19_arg0.infoPaneDefaultText:setText( f19_local1 )
+	f19_arg0.infoPaneDefaultText:setText(f19_local1)
 	if f19_local0.hintText then
-		f19_arg0.infoPaneDescription:setText( f19_local0.hintText )
+		f19_arg0.infoPaneDescription:setText(f19_local0.hintText)
 	else
-		f19_arg0.infoPaneDescription:setText( "" )
+		f19_arg0.infoPaneDescription:setText("")
 	end
 end
 
-CoD.GameOptionsMenu.ButtonPromptBack = function ( f20_arg0, f20_arg1 )
+CoD.GameOptionsMenu.ButtonPromptBack = function(f20_arg0, f20_arg1)
 	f20_arg0.buttonList:saveState()
-	CoD.Menu.ButtonPromptBack( f20_arg0, f20_arg1 )
+	CoD.Menu.ButtonPromptBack(f20_arg0, f20_arg1)
 end
 
-CoD.GameOptionsMenu.RefreshSettings = function ( f21_arg0, f21_arg1 )
-	f21_arg0:processEvent( {
-		name = "button_update"
-	} )
+CoD.GameOptionsMenu.RefreshSettings = function(f21_arg0, f21_arg1)
+	f21_arg0:processEvent(
+		{
+			name = "button_update"
+		}
+	)
 end
 
-CoD.GameOptionsMenu:registerEventHandler( "button_gained_focus", CoD.GameOptionsMenu.ButtonGainedFocus )
-CoD.GameOptionsMenu:registerEventHandler( "button_prompt_back", CoD.GameOptionsMenu.ButtonPromptBack )
-CoD.GameOptionsMenu:registerEventHandler( "refresh_settings", CoD.GameOptionsMenu.RefreshSettings )
-local f0_local6 = function ( f22_arg0, f22_arg1 )
+CoD.GameOptionsMenu:registerEventHandler("button_gained_focus", CoD.GameOptionsMenu.ButtonGainedFocus)
+CoD.GameOptionsMenu:registerEventHandler("button_prompt_back", CoD.GameOptionsMenu.ButtonPromptBack)
+CoD.GameOptionsMenu:registerEventHandler("refresh_settings", CoD.GameOptionsMenu.RefreshSettings)
+local f0_local6 = function(f22_arg0, f22_arg1)
 	Engine.PartyHostClearUIState()
-	CoD.GameOptionsMenu.ButtonPromptBack( f22_arg0, f22_arg1 )
+	CoD.GameOptionsMenu.ButtonPromptBack(f22_arg0, f22_arg1)
 end
 
-LUI.createMenu.EditBotOptions = function ( f23_arg0 )
-	local f23_local0 = CoD.GameOptionsMenu.New( f23_arg0, "EditBotOptions" )
-	f23_local0:addTitle( Engine.Localize( "MENU_SETUP_BOTS_CAPS" ) )
-	local f23_local1 = UIExpression.DvarString( nil, "ui_gameType" )
+LUI.createMenu.EditBotOptions = function(f23_arg0)
+	local f23_local0 = CoD.GameOptionsMenu.New(f23_arg0, "EditBotOptions")
+	f23_local0:addTitle(Engine.Localize("MENU_SETUP_BOTS_CAPS"))
+	local f23_local1 = UIExpression.DvarString(nil, "ui_gameType")
 	if f23_local1 ~= "dm" then
-		f23_local0.friendsButton = f23_local0.buttonList:addDvarLeftRightSelector( f23_arg0, Engine.Localize( "MPUI_FRIENDLY_PRACTICE_DUMMIES_CAPS" ), "bot_friends", Engine.Localize( "MENU_FRIENDLY_BOTS" ) )
+		f23_local0.friendsButton =
+			f23_local0.buttonList:addDvarLeftRightSelector(
+			f23_arg0,
+			Engine.Localize("MPUI_FRIENDLY_PRACTICE_DUMMIES_CAPS"),
+			"bot_friends",
+			Engine.Localize("MENU_FRIENDLY_BOTS")
+		)
 	end
-	f23_local0.enemiesButton = f23_local0.buttonList:addDvarLeftRightSelector( f23_arg0, Engine.Localize( "MPUI_ENEMY_PRACTICE_DUMMIES_CAPS" ), "bot_enemies", Engine.Localize( "MENU_ENEMY_BOTS" ) )
+	f23_local0.enemiesButton =
+		f23_local0.buttonList:addDvarLeftRightSelector(
+		f23_arg0,
+		Engine.Localize("MPUI_ENEMY_PRACTICE_DUMMIES_CAPS"),
+		"bot_enemies",
+		Engine.Localize("MENU_ENEMY_BOTS")
+	)
 	if f23_local1 ~= "dm" then
-		CoD.GameOptions.Button_Bots_AddChoices( f23_local0.friendsButton, f23_local0.enemiesButton, f23_arg0, true )
+		CoD.GameOptions.Button_Bots_AddChoices(f23_local0.friendsButton, f23_local0.enemiesButton, f23_arg0, true)
 	end
-	CoD.GameOptions.Button_Bots_AddChoices( f23_local0.enemiesButton, f23_local0.friendsButton, f23_arg0, true )
-	f23_local0.difficultyButton = f23_local0.buttonList:addDvarLeftRightSelector( f23_arg0, Engine.Localize( "MENU_BASICTRAINING_DIFFICULTY_CAPS" ), "bot_difficulty", Engine.Localize( "MENU_BOT_DIFFICULTY" ) )
-	CoD.GameOptions.Button_BotDifficulty_AddChoices( f23_local0.difficultyButton, f23_arg0 )
+	CoD.GameOptions.Button_Bots_AddChoices(f23_local0.enemiesButton, f23_local0.friendsButton, f23_arg0, true)
+	f23_local0.difficultyButton =
+		f23_local0.buttonList:addDvarLeftRightSelector(
+		f23_arg0,
+		Engine.Localize("MENU_BASICTRAINING_DIFFICULTY_CAPS"),
+		"bot_difficulty",
+		Engine.Localize("MENU_BOT_DIFFICULTY")
+	)
+	CoD.GameOptions.Button_BotDifficulty_AddChoices(f23_local0.difficultyButton, f23_arg0)
 	if not f23_local0.buttonList:restoreState() then
-		f23_local0.buttonList:processEvent( {
-			name = "gain_focus"
-		} )
+		f23_local0.buttonList:processEvent(
+			{
+				name = "gain_focus"
+			}
+		)
 	end
-	f23_local0:registerEventHandler( "button_prompt_back", f0_local6 )
+	f23_local0:registerEventHandler("button_prompt_back", f0_local6)
 	return f23_local0
 end
-

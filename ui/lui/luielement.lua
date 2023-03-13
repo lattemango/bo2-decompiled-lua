@@ -525,32 +525,26 @@ LUI.UIElement.clearSavedState = function(f38_arg0)
 	end
 end
 
-LUI.UIElement.restoreState = function(f39_arg0)
-	if not f39_arg0:isIDNamed() then
-		error("LUI Error: Tried to restore menu state, but element has no name: " .. f39_arg0:getFullID())
+LUI.UIElement.restoreState = function(element)
+	if not element:isIDNamed() then
+		error("LUI Error: Tried to restore menu state, but element has no name: " .. element:getFullID())
 		return
 	else
-		local f39_local0 = LUI.savedMenuStates[f39_arg0.id]
+		local f39_local0 = LUI.savedMenuStates[element.id]
 		if f39_local0 ~= nil and f39_local0.id then
-			return f39_arg0:processEvent({
-				name = "restore_focus",
-				id = f39_local0.id,
-				data = f39_local0.data
-			})
+			return element:processEvent({ name = "restore_focus", id = f39_local0.id, data = f39_local0.data })
 		else
 
 		end
 	end
 end
 
-LUI.UIElement.restoreFocus = function(f40_arg0, f40_arg1)
-	if f40_arg0.id == f40_arg1.id then
-		f40_arg0:processEvent({
-			name = "gain_focus"
-		})
+LUI.UIElement.restoreFocus = function(element, f40_arg1)
+	if element.id == f40_arg1.id then
+		element:processEvent({ name = "gain_focus" })
 		return true
 	else
-		return f40_arg0:dispatchEventToChildren(f40_arg1)
+		return element:dispatchEventToChildren(f40_arg1)
 	end
 end
 

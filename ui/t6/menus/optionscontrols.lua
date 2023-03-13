@@ -1,495 +1,494 @@
-require( "T6.KeyBindSelector" )
-require( "T6.ButtonLayoutOptions" )
-require( "T6.StickLayoutOptions" )
+require("T6.KeyBindSelector")
+require("T6.ButtonLayoutOptions")
+require("T6.StickLayoutOptions")
 
 CoD.OptionsControls = {}
 CoD.OptionsControls.CurrentTabIndex = nil
-CoD.OptionsControls.Button_AddChoices_LookSensitivity = function ( f1_arg0 )
-	local f1_local0 = {}
-	local f1_local1 = Engine.Localize( "MENU_SENSITIVITY_VERY_LOW_CAPS" )
-	local f1_local2 = Engine.Localize( "MENU_SENSITIVITY_LOW_CAPS" )
-	local f1_local3 = "3"
-	local f1_local4 = Engine.Localize( "MENU_SENSITIVITY_MEDIUM_CAPS" )
-	local f1_local5 = "5"
-	local f1_local6 = "6"
-	local f1_local7 = "7"
-	local f1_local8 = Engine.Localize( "MENU_SENSITIVITY_HIGH_CAPS" )
-	local f1_local9 = "9"
-	local f1_local10 = "10"
-	local f1_local11 = Engine.Localize( "MENU_SENSITIVITY_VERY_HIGH_CAPS" )
-	local f1_local12 = "12"
-	local f1_local13 = "13"
-	local f1_local14 = Engine.Localize( "MENU_SENSITIVITY_INSANE_CAPS" )
-	f1_arg0.strings = f1_local1
-	f1_arg0.values = {
-		CoD.SENSITIVITY_1,
-		CoD.SENSITIVITY_2,
-		CoD.SENSITIVITY_3,
-		CoD.SENSITIVITY_4,
-		CoD.SENSITIVITY_5,
-		CoD.SENSITIVITY_6,
-		CoD.SENSITIVITY_7,
-		CoD.SENSITIVITY_8,
-		CoD.SENSITIVITY_9,
-		CoD.SENSITIVITY_10,
-		CoD.SENSITIVITY_11,
-		CoD.SENSITIVITY_12,
-		CoD.SENSITIVITY_13,
-		CoD.SENSITIVITY_14
-	}
-	CoD.Options.Button_AddChoices( f1_arg0 )
+
+CoD.OptionsControls.Button_AddChoices_LookSensitivity = function(sensitivities)
+    sensitivities.strings = {Engine.Localize("MENU_SENSITIVITY_VERY_LOW_CAPS"),
+                             Engine.Localize("MENU_SENSITIVITY_LOW_CAPS"), "3",
+                             Engine.Localize("MENU_SENSITIVITY_MEDIUM_CAPS"), "5", "6", "7",
+                             Engine.Localize("MENU_SENSITIVITY_HIGH_CAPS"), "9", "10",
+                             Engine.Localize("MENU_SENSITIVITY_VERY_HIGH_CAPS"), "12", "13",
+                             Engine.Localize("MENU_SENSITIVITY_INSANE_CAPS")}
+    sensitivities.values = {CoD.SENSITIVITY_1, CoD.SENSITIVITY_2, CoD.SENSITIVITY_3, CoD.SENSITIVITY_4,
+                            CoD.SENSITIVITY_5, CoD.SENSITIVITY_6, CoD.SENSITIVITY_7, CoD.SENSITIVITY_8,
+                            CoD.SENSITIVITY_9, CoD.SENSITIVITY_10, CoD.SENSITIVITY_11, CoD.SENSITIVITY_12,
+                            CoD.SENSITIVITY_13, CoD.SENSITIVITY_14}
+    CoD.Options.Button_AddChoices(sensitivities)
 end
 
-CoD.OptionsControls.Button_AddChoices_InvertMouse = function ( f2_arg0 )
-	f2_arg0:addChoice( Engine.Localize( "MENU_YES_CAPS" ), -0.02 )
-	f2_arg0:addChoice( Engine.Localize( "MENU_NO_CAPS" ), 0.02 )
+CoD.OptionsControls.Button_AddChoices_InvertMouse = function(lookTabButtonList, LocalClientIndex)
+    lookTabButtonList:addChoice(LocalClientIndex, Engine.Localize("MENU_NO_CAPS"), 0.02)
+    lookTabButtonList:addChoice(LocalClientIndex, Engine.Localize("MENU_YES_CAPS"), -0.02)
 end
 
-CoD.OptionsControls.Callback_GamepadSelector = function ( f3_arg0, f3_arg1 )
-	if f3_arg1 then
-		Engine.SetHardwareProfileValue( f3_arg0.parentSelectorButton.m_profileVarName, f3_arg0.value )
-		if f3_arg0.value == 1 then
-			Dvar.gpad_enabled:set( true )
-			Engine.Exec( controller, "execcontrollerbindings" )
-		else
-			Dvar.gpad_enabled:set( false )
-		end
-	end
+CoD.OptionsControls.Callback_GamepadSelector = function(gamepadEnabled, client)
+    if client then
+        Engine.SetHardwareProfileValue(gamepadEnabled.parentSelectorButton.m_profileVarName, gamepadEnabled.value)
+        if gamepadEnabled.value == 1 then
+            Dvar.gpad_enabled:set(true)
+            Engine.Exec(0, "execcontrollerbindings")
+        else
+            Dvar.gpad_enabled:set(false)
+        end
+    end
 end
 
-CoD.OptionsControls.Button_AddChoices_Gamepad = function ( f4_arg0 )
-	f4_arg0:addChoice( Engine.Localize( "MENU_DISABLED_CAPS" ), 0, nil, CoD.OptionsControls.Callback_GamepadSelector )
-	f4_arg0:addChoice( Engine.Localize( "MENU_ENABLED_CAPS" ), 1, nil, CoD.OptionsControls.Callback_GamepadSelector )
+CoD.OptionsControls.Button_AddChoices_Gamepad = function(gamepadButtonList)
+    gamepadButtonList:addChoice(Engine.Localize("MENU_DISABLED_CAPS"), 0, nil,
+        CoD.OptionsControls.Callback_GamepadSelector)
+    gamepadButtonList:addChoice(Engine.Localize("MENU_ENABLED_CAPS"), 1, nil,
+        CoD.OptionsControls.Callback_GamepadSelector)
 end
 
-CoD.OptionsControls.AddKeyBindingElements = function ( f5_arg0, f5_arg1, f5_arg2 )
-	for f5_local3, f5_local4 in ipairs( f5_arg2 ) do
-		if f5_local4.command == "break" then
-			f5_arg1:addSpacer( CoD.CoD9Button.Height / 2 )
-		else
-			f5_arg1:addKeyBindSelector( f5_arg0, Engine.Localize( f5_local4.label ), f5_local4.command, CoD.BIND_PLAYER )
-		end
-	end
+CoD.OptionsControls.AddKeyBindingElements = function(localClientIndex, buttonList, keyCommandsAndLabels)
+    for Key, keyCommandAndLabel in ipairs(keyCommandsAndLabels) do
+        if keyCommandAndLabel.command == "break" then
+            buttonList:addSpacer(CoD.CoD9Button.Height / 2)
+        else
+            if keyCommandAndLabel.hint ~= nil then
+                buttonList:addKeyBindSelector(localClientIndex, Engine.Localize(keyCommandAndLabel.label),
+                    keyCommandAndLabel.command, CoD.BIND_PLAYER, keyCommandAndLabel.hint)
+            else
+                buttonList:addKeyBindSelector(localClientIndex, Engine.Localize(keyCommandAndLabel.label),
+                    keyCommandAndLabel.command, CoD.BIND_PLAYER)
+            end
+        end
+    end
 end
 
-CoD.OptionsControls.CreateLookTab = function ( menu, controller )
-	local self = LUI.UIContainer.new()
-	local f6_local1 = CoD.Options.CreateButtonList()
-	menu.buttonList = f6_local1
-	self:addElement( f6_local1 )
-	CoD.OptionsControls.AddKeyBindingElements( controller, f6_local1, {
-		{
-			command = "+leanleft",
-			label = "MENU_LEAN_LEFT_CAPS"
-		},
-		{
-			command = "+leanright",
-			label = "MENU_LEAN_RIGHT_CAPS"
-		},
-		{
-			command = "+lookup",
-			label = "MENU_LOOK_UP_CAPS"
-		},
-		{
-			command = "+lookdown",
-			label = "MENU_LOOK_DOWN_CAPS"
-		},
-		{
-			command = "+left",
-			label = "MENU_TURN_LEFT_CAPS"
-		},
-		{
-			command = "+right",
-			label = "MENU_TURN_RIGHT_CAPS"
-		},
-		{
-			command = "+mlook",
-			label = "MENU_MOUSE_LOOK_CAPS"
-		},
-		{
-			command = "centerview",
-			label = "MENU_CENTER_VIEW_CAPS"
-		}
-	} )
-	f6_local1:addSpacer( CoD.CoD9Button.Height / 2 )
-	CoD.OptionsControls.Button_AddChoices_InvertMouse( f6_local1:addHardwareProfileLeftRightSelector( Engine.Localize( "MENU_INVERT_MOUSE_CAPS" ), "m_pitch" ) )
-	CoD.Options.Button_AddChoices_YesOrNo( f6_local1:addHardwareProfileLeftRightSelector( Engine.Localize( "MENU_FREE_LOOK_CAPS" ), "cl_freelook" ) )
-	local f6_local2 = f6_local1:addProfileLeftRightSlider( controller, Engine.Localize( "MENU_MOUSE_SENSITIVITY_CAPS" ), "mouseSensitivity", 0.01, 30, nil, nil, nil, CoD.Options.AdjustSFX )
-	f6_local2:setNumericDisplayFormatString( "%.2f" )
-	f6_local2:setRoundToFraction( 0.5 )
-	f6_local2:setBarSpeed( 0.01 )
-	return self
+CoD.OptionsControls.Button_AddChoices_YesOrNo = function(lookTabButtonList, LocalClientIndex)
+    lookTabButtonList.strings = {Engine.Localize("MENU_NO_CAPS"), Engine.Localize("MENU_YES_CAPS")}
+    lookTabButtonList.values = {0, 1}
+    CoD.OptionsControls.Button_AddChoices(lookTabButtonList, LocalClientIndex)
 end
 
-CoD.OptionsControls.CreateMoveTab = function ( menu, controller )
-	local self = LUI.UIContainer.new()
-	local f7_local1 = CoD.Options.CreateButtonList()
-	menu.buttonList = f7_local1
-	self:addElement( f7_local1 )
-	CoD.OptionsControls.AddKeyBindingElements( controller, f7_local1, {
-		{
-			command = "+forward",
-			label = "MENU_FORWARD_CAPS"
-		},
-		{
-			command = "+back",
-			label = "MENU_BACKPEDAL_CAPS"
-		},
-		{
-			command = "+moveleft",
-			label = "MENU_MOVE_LEFT_CAPS"
-		},
-		{
-			command = "+moveright",
-			label = "MENU_MOVE_RIGHT_CAPS"
-		},
-		{
-			command = "break"
-		},
-		{
-			command = "+gostand",
-			label = "MENU_STANDJUMP_CAPS"
-		},
-		{
-			command = "gocrouch",
-			label = "MENU_GO_TO_CROUCH_CAPS"
-		},
-		{
-			command = "goprone",
-			label = "MENU_GO_TO_PRONE_CAPS"
-		},
-		{
-			command = "togglecrouch",
-			label = "MENU_TOGGLE_CROUCH_CAPS"
-		},
-		{
-			command = "toggleprone",
-			label = "MENU_TOGGLE_PRONE_CAPS"
-		},
-		{
-			command = "+movedown",
-			label = "MENU_CROUCH_CAPS"
-		},
-		{
-			command = "+prone",
-			label = "MENU_PRONE_CAPS"
-		},
-		{
-			command = "break"
-		},
-		{
-			command = "+stance",
-			label = "PLATFORM_CHANGE_STANCE_CAPS"
-		},
-		{
-			command = "+strafe",
-			label = "MENU_STRAFE_CAPS"
-		}
-	} )
-	return self
+CoD.OptionsControls.Button_AddChoices = function(lookTabButtonList, LocalClientIndex)
+    if lookTabButtonList.strings == nil or #lookTabButtonList.strings == 0 then
+        return
+    end
+    for StringIndex = 1, #lookTabButtonList.strings, 1 do
+        lookTabButtonList:addChoice(LocalClientIndex, lookTabButtonList.strings[StringIndex],
+            lookTabButtonList.values[StringIndex])
+    end
 end
 
-CoD.OptionsControls.CreateCombatTab = function ( menu, controller )
-	local self = LUI.UIContainer.new()
-	local f8_local1 = CoD.Options.CreateButtonList()
-	menu.buttonList = f8_local1
-	self:addElement( f8_local1 )
-	CoD.OptionsControls.AddKeyBindingElements( controller, f8_local1, {
-		{
-			command = "+attack",
-			label = "MENU_ATTACK_CAPS"
-		},
-		{
-			command = "+speed_throw",
-			label = "MENU_AIM_DOWN_THE_SIGHT_CAPS"
-		},
-		{
-			command = "+toggleads_throw",
-			label = "MENU_TOGGLE_AIM_DOWN_THE_SIGHT_CAPS"
-		},
-		{
-			command = "+melee",
-			label = "MENU_MELEE_ATTACK_CAPS"
-		},
-		{
-			command = "+weapnext_inventory",
-			label = "PLATFORM_SWITCH_WEAPON_CAPS"
-		},
-		{
-			command = "weapprev",
-			label = "PLATFORM_NEXT_WEAPON_CAPS"
-		},
-		{
-			command = "+reload",
-			label = "MENU_RELOAD_WEAPON_CAPS"
-		},
-		{
-			command = "+sprint",
-			label = "MENU_SPRINT_CAPS"
-		},
-		{
-			command = "+breath_sprint",
-			label = "MENU_SPRINT_HOLD_BREATH_CAPS"
-		},
-		{
-			command = "+holdbreath",
-			label = "MENU_STEADY_SNIPER_RIFLE_CAPS"
-		},
-		{
-			command = "+frag",
-			label = "PLATFORM_THROW_PRIMARY_CAPS"
-		},
-		{
-			command = "+smoke",
-			label = "PLATFORM_THROW_SECONDARY_CAPS"
-		}
-	} )
-	return self
+CoD.OptionsControls.CreateLookTab = function(lookTab, localClientIndex)
+    local lookTabContainer = LUI.UIContainer.new()
+    local lookTabButtonList = CoD.Options.CreateButtonList()
+    lookTab.buttonList = lookTabButtonList
+    lookTabContainer:addElement(lookTabButtonList)
+    CoD.OptionsControls.AddKeyBindingElements(localClientIndex, lookTabButtonList, {{
+        command = "+leanleft",
+        label = "MENU_LEAN_LEFT_CAPS"
+    }, {
+        command = "+leanright",
+        label = "MENU_LEAN_RIGHT_CAPS"
+    }, {
+        command = "+lookup",
+        label = "MENU_LOOK_UP_CAPS"
+    }, {
+        command = "+lookdown",
+        label = "MENU_LOOK_DOWN_CAPS"
+    }, {
+        command = "+left",
+        label = "MENU_TURN_LEFT_CAPS"
+    }, {
+        command = "+right",
+        label = "MENU_TURN_RIGHT_CAPS"
+    }, {
+        command = "+mlook",
+        label = "MENU_MOUSE_LOOK_CAPS"
+    }, {
+        command = "centerview",
+        label = "MENU_CENTER_VIEW_CAPS"
+    }})
+    lookTabButtonList:addSpacer(CoD.CoD9Button.Height / 2)
+    CoD.OptionsControls.Button_AddChoices_InvertMouse(lookTabButtonList:addDvarLeftRightSelector(localClientIndex,
+        Engine.Localize("MENU_INVERT_MOUSE_CAPS"), "m_pitch"), localClientIndex)
+    CoD.OptionsControls.Button_AddChoices_YesOrNo(lookTabButtonList:addDvarLeftRightSelector(localClientIndex,
+        Engine.Localize("MENU_FREE_LOOK_CAPS"), "cl_freelook"), localClientIndex)
+    local MouseSensitivityOptions = lookTabButtonList:addProfileLeftRightSlider(localClientIndex, Engine.Localize(
+        "MENU_MOUSE_SENSITIVITY_CAPS"), "mouseSensitivity", 0.01, 30,
+        "Use the left and right arrow keys for more precise adjustments.", nil, nil, CoD.Options.AdjustSFX)
+    MouseSensitivityOptions:setNumericDisplayFormatString("%.2f")
+    MouseSensitivityOptions:setRoundToFraction(0.5)
+    MouseSensitivityOptions:setBarSpeed(0.01)
+    return lookTabContainer
 end
 
-CoD.OptionsControls.CreateInteractTab = function ( menu, controller )
-	local self = LUI.UIContainer.new()
-	local f9_local1 = CoD.Options.CreateButtonList()
-	menu.buttonList = f9_local1
-	self:addElement( f9_local1 )
-	local f9_local2, f9_local3, f9_local4, f9_local5 = nil
-	if CoD.isSinglePlayer then
-		f9_local2 = "PLATFORM_AIR_SUPPORT_CAPS"
-		f9_local3 = "PLATFORM_USE_GEAR_CAPS"
-		f9_local4 = "PLATFORM_GROUND_SUPPORT_CAPS"
-		f9_local5 = "PLATFORM_USE_EQUIPMENT_CAPS"
-	else
-		f9_local2 = "PLATFORM_NEXT_SCORE_STREAK_CAPS"
-		f9_local3 = "PLATFORM_PREVIOUS_SCORE_STREAK_CAPS"
-		f9_local4 = "PLATFORM_ACTIONSLOT_3"
-		f9_local5 = "PLATFORM_ACTIVATE_SCORE_STREAK_CAPS"
-	end
-	local f9_local6 = {
-		{
-			command = "+activate",
-			label = "MENU_USE_CAPS"
-		},
-		{
-			command = "break"
-		},
-		{
-			command = "+actionslot 3",
-			label = f9_local4
-		},
-		{
-			command = "+actionslot 1",
-			label = f9_local2
-		},
-		{
-			command = "+actionslot 2",
-			label = f9_local3
-		},
-		{
-			command = "+actionslot 4",
-			label = f9_local5
-		},
-		{
-			command = "break"
-		},
-		{
-			command = "screenshotjpeg",
-			label = "MENU_SCREENSHOT_CAPS"
-		}
-	}
-	if CoD.isMultiplayer then
-		table.insert( f9_local6, {
-			command = "chooseclass_hotkey",
-			label = "MPUI_CHOOSE_CLASS_CAPS"
-		} )
-		table.insert( f9_local6, {
-			command = "+scores",
-			label = "PLATFORM_SCOREBOARD_CAPS"
-		} )
-		table.insert( f9_local6, {
-			command = "togglescores",
-			label = "PLATFORM_SCOREBOARD_TOGGLE_CAPS"
-		} )
-		table.insert( f9_local6, {
-			command = "break"
-		} )
-		table.insert( f9_local6, {
-			command = "+talk",
-			label = "MENU_VOICE_CHAT_BUTTON_CAPS"
-		} )
-		table.insert( f9_local6, {
-			command = "chatmodepublic",
-			label = "MENU_CHAT_CAPS"
-		} )
-		table.insert( f9_local6, {
-			command = "chatmodeteam",
-			label = "MENU_TEAM_CHAT_CAPS"
-		} )
-	end
-	CoD.OptionsControls.AddKeyBindingElements( controller, f9_local1, f9_local6 )
-	return self
+CoD.OptionsControls.CreateMoveTab = function(moveTab, localClientIndex)
+    local moveTabContainer = LUI.UIContainer.new()
+    local moveTabButtonList = CoD.Options.CreateButtonList()
+    moveTab.buttonList = moveTabButtonList
+    moveTabContainer:addElement(moveTabButtonList)
+    CoD.OptionsControls.AddKeyBindingElements(localClientIndex, moveTabButtonList, {{
+        command = "+forward",
+        label = "MENU_FORWARD_CAPS"
+    }, {
+        command = "+back",
+        label = "MENU_BACKPEDAL_CAPS"
+    }, {
+        command = "+moveleft",
+        label = "MENU_MOVE_LEFT_CAPS"
+    }, {
+        command = "+moveright",
+        label = "MENU_MOVE_RIGHT_CAPS"
+    }, {
+        command = "break"
+    }, {
+        command = "+gostand",
+        label = "MENU_STANDJUMP_CAPS"
+    }, {
+        command = "gocrouch",
+        label = "MENU_GO_TO_CROUCH_CAPS"
+    }, {
+        command = "goprone",
+        label = "MENU_GO_TO_PRONE_CAPS"
+    }, {
+        command = "togglecrouch",
+        label = "MENU_TOGGLE_CROUCH_CAPS"
+    }, {
+        command = "toggleprone",
+        label = "MENU_TOGGLE_PRONE_CAPS"
+    }, {
+        command = "+movedown",
+        label = "MENU_CROUCH_CAPS"
+    }, {
+        command = "+prone",
+        label = "MENU_PRONE_CAPS"
+    }, {
+        command = "break"
+    }, {
+        command = "+stance",
+        label = "PLATFORM_CHANGE_STANCE_CAPS"
+    }, {
+        command = "+strafe",
+        label = "MENU_STRAFE_CAPS"
+    }})
+    return moveTabContainer
 end
 
-CoD.OptionsControls.CreateGamepadTab = function ( menu, controller )
-	local self = LUI.UIContainer.new()
-	local f10_local1 = UIExpression.IsDemoPlaying( controller ) ~= 0
-	local f10_local2 = CoD.Options.CreateButtonList()
-	menu.buttonList = f10_local2
-	self:addElement( f10_local2 )
-	CoD.OptionsControls.Button_AddChoices_Gamepad( f10_local2:addHardwareProfileLeftRightSelector( Engine.Localize( "PLATFORM_ENABLE_GAMEPAD_CAPS" ), "gpad_enabled" ) )
-	CoD.Options.Button_AddChoices_EnabledOrDisabled( f10_local2:addProfileLeftRightSelector( controller, Engine.Localize( "MENU_LOOK_INVERSION_CAPS" ), "input_invertpitch", Engine.Localize( "MENU_LOOK_INVERSION_DESC" ) ) )
-	CoD.Options.Button_AddChoices_EnabledOrDisabled( f10_local2:addProfileLeftRightSelector( controller, Engine.Localize( "PLATFORM_CONTROLLER_VIBRATION_CAPS" ), "gpad_rumble", Engine.Localize( "PLATFORM_CONTROLLER_VIBRATION_DESC" ) ) )
-	if f10_local1 then
-		local f10_local3 = f10_local2:addProfileLeftRightSelector( controller, Engine.Localize( "MENU_THEATER_BUTTON_LAYOUT_CAPS" ), "demo_controllerconfig", Engine.Localize( "MENU_THEATER_BUTTON_LAYOUT_DESC" ) )
-		CoD.ButtonLayout.AddChoices( f10_local3, controller )
-		f10_local3:disableCycling()
-		f10_local3:registerEventHandler( "button_action", CoD.OptionsControls.Button_ButtonLayout )
-	else
-		local f10_local3 = f10_local2:addProfileLeftRightSelector( controller, Engine.Localize( "MENU_THUMBSTICK_LAYOUT_CAPS" ), "gpad_sticksConfig", Engine.Localize( "MENU_THUMBSTICK_LAYOUT_DESC" ) )
-		CoD.StickLayout.AddChoices( f10_local3 )
-		f10_local3:disableCycling()
-		f10_local3:registerEventHandler( "button_action", CoD.OptionsControls.Button_StickLayout )
-		local f10_local4 = f10_local2:addProfileLeftRightSelector( controller, Engine.Localize( "MENU_BUTTON_LAYOUT_CAPS" ), "gpad_buttonsConfig", Engine.Localize( "MENU_BUTTON_LAYOUT_DESC" ) )
-		CoD.ButtonLayout.AddChoices( f10_local4, controller )
-		f10_local4:disableCycling()
-		f10_local4:registerEventHandler( "button_action", CoD.OptionsControls.Button_ButtonLayout )
-	end
-	CoD.OptionsControls.Button_AddChoices_LookSensitivity( f10_local2:addProfileLeftRightSelector( controller, Engine.Localize( "MENU_LOOK_SENSITIVITY_CAPS" ), "input_viewSensitivity", Engine.Localize( "PLATFORM_LOOK_SENSITIVITY_DESC" ) ) )
-	return self
+CoD.OptionsControls.CreateCombatTab = function(combatTab, localClientIndex)
+    local combatTabContainer = LUI.UIContainer.new()
+    local combatTabButtonList = CoD.Options.CreateButtonList()
+    combatTab.buttonList = combatTabButtonList
+    combatTabContainer:addElement(combatTabButtonList)
+    CoD.OptionsControls.AddKeyBindingElements(localClientIndex, combatTabButtonList, {{
+        command = "+attack",
+        label = "MENU_ATTACK_CAPS"
+    }, {
+        command = "+speed_throw",
+        label = "MENU_AIM_DOWN_THE_SIGHT_CAPS"
+    }, {
+        command = "+toggleads_throw",
+        label = "MENU_TOGGLE_AIM_DOWN_THE_SIGHT_CAPS"
+    }, {
+        command = "+melee",
+        label = "MENU_MELEE_ATTACK_CAPS"
+    }, {
+        command = "+weapnext_inventory",
+        label = "PLATFORM_SWITCH_WEAPON_CAPS"
+    }, {
+        command = "weapprev",
+        label = "PLATFORM_NEXT_WEAPON_CAPS"
+    }, {
+        command = "+reload",
+        label = "MENU_RELOAD_WEAPON_CAPS"
+    }, {
+        command = "+sprint",
+        label = "MENU_SPRINT_CAPS"
+    }, {
+        command = "+breath_sprint",
+        label = "MENU_SPRINT_HOLD_BREATH_CAPS"
+    }, {
+        command = "+holdbreath",
+        label = "MENU_STEADY_SNIPER_RIFLE_CAPS"
+    }, {
+        command = "+frag",
+        label = "PLATFORM_THROW_PRIMARY_CAPS"
+    }, {
+        command = "+smoke",
+        label = "PLATFORM_THROW_SECONDARY_CAPS"
+    }})
+    return combatTabContainer
 end
 
-CoD.OptionsControls.TabChanged = function ( f11_arg0, f11_arg1 )
-	f11_arg0.buttonList = f11_arg0.tabManager.buttonList
-	local f11_local0 = f11_arg0.buttonList:getFirstChild()
-	while not f11_local0.m_focusable do
-		f11_local0 = f11_local0:getNextSibling()
-	end
-	if f11_local0 ~= nil then
-		f11_local0:processEvent( {
-			name = "gain_focus"
-		} )
-	end
-	CoD.OptionsControls.CurrentTabIndex = f11_arg1.tabIndex
+CoD.OptionsControls.CreateInteractTab = function(interactTab, localClientIndex)
+    local interactTabContainer = LUI.UIContainer.new()
+    local interactTabButtonList = CoD.Options.CreateButtonList()
+    interactTab.buttonList = interactTabButtonList
+    interactTabContainer:addElement(interactTabButtonList)
+    local interactTabContents = {}
+    if CoD.isZombie then
+        interactTabContents = {{
+            command = "+activate",
+            label = "MENU_USE_CAPS"
+        }, {
+            command = "break"
+        }, {
+            command = "+actionslot 3",
+            label = "PLATFORM_ACTIONSLOT_3"
+        }, {
+            command = "+actionslot 1",
+            label = "PLATFORM_NEXT_SCORE_STREAK_CAPS",
+            hint = "Key used to take equipment out."
+        }, {
+            command = "+actionslot 2",
+            label = "PLATFORM_PREVIOUS_SCORE_STREAK_CAPS",
+            hint = "Key used to take out the quadrorotor(Origins only)."
+        }, {
+            command = "+actionslot 4",
+            label = "PLATFORM_ACTIVATE_SCORE_STREAK_CAPS",
+            hint = "Key used to take claymores out."
+        }, {
+            command = "break"
+        }, {
+            command = "screenshotjpeg",
+            label = "MENU_SCREENSHOT_CAPS"
+        }}
+    elseif CoD.isMultiplayer then
+        interactTabContents = {{
+            command = "+activate",
+            label = "MENU_USE_CAPS"
+        }, {
+            command = "break"
+        }, {
+            command = "+actionslot 3",
+            label = "PLATFORM_ACTIONSLOT_3"
+        }, {
+            command = "+actionslot 1",
+            label = "PLATFORM_NEXT_SCORE_STREAK_CAPS"
+        }, {
+            command = "+actionslot 2",
+            label = "PLATFORM_PREVIOUS_SCORE_STREAK_CAPS"
+        }, {
+            command = "+actionslot 4",
+            label = "PLATFORM_ACTIVATE_SCORE_STREAK_CAPS"
+        }, {
+            command = "break"
+        }, {
+            command = "screenshotjpeg",
+            label = "MENU_SCREENSHOT_CAPS"
+        }}
+    end
+    table.insert(interactTabContents, {
+        command = "chooseclass_hotkey",
+        label = "MPUI_CHOOSE_CLASS_CAPS"
+    })
+    table.insert(interactTabContents, {
+        command = "+scores",
+        label = "PLATFORM_SCOREBOARD_CAPS"
+    })
+    table.insert(interactTabContents, {
+        command = "togglescores",
+        label = "PLATFORM_SCOREBOARD_TOGGLE_CAPS"
+    })
+    table.insert(interactTabContents, {
+        command = "break"
+    })
+    table.insert(interactTabContents, {
+        command = "+talk",
+        label = "MENU_VOICE_CHAT_BUTTON_CAPS"
+    })
+    table.insert(interactTabContents, {
+        command = "chatmodepublic",
+        label = "MENU_CHAT_CAPS"
+    })
+    table.insert(interactTabContents, {
+        command = "chatmodeteam",
+        label = "MENU_TEAM_CHAT_CAPS"
+    })
+    CoD.OptionsControls.AddKeyBindingElements(localClientIndex, interactTabButtonList, interactTabContents)
+    return interactTabContainer
 end
 
-CoD.OptionsControls.DefaultPopup_RestoreDefaultControls = function ( f12_arg0, f12_arg1 )
-	Engine.SetProfileVar( f12_arg1.controller, "input_invertpitch", 0 )
-	Engine.SetProfileVar( f12_arg1.controller, "gpad_rumble", 1 )
-	Engine.SetProfileVar( f12_arg1.controller, "gpad_sticksConfig", CoD.THUMBSTICK_DEFAULT )
-	Engine.SetProfileVar( f12_arg1.controller, "gpad_buttonsConfig", CoD.BUTTONS_DEFAULT )
-	Engine.SetProfileVar( f12_arg1.controller, "input_viewSensitivity", CoD.SENSITIVITY_4 )
-	Engine.SetProfileVar( f12_arg1.controller, "mouseSensitivity", 5 )
-	local f12_local0 = "default_controls"
-	if CoD.isMultiplayer then
-		f12_local0 = "default_mp_controls"
-	end
-	local f12_local1 = Engine.GetLanguage()
-	if f12_local1 then
-		f12_local0 = f12_local0 .. "_" .. f12_local1
-	end
-	Engine.ExecNow( f12_arg1.controller, "exec " .. f12_local0 )
-	Engine.Exec( f12_arg1.controller, "execcontrollerbindings" )
-	Engine.SyncHardwareProfileWithDvars()
-	f12_arg0:goBack( f12_arg1.controller )
+CoD.OptionsControls.CreateGamepadTab = function(gamepadTab, localClientIndex)
+    local gamepadButtonListContainer = LUI.UIContainer.new()
+    local gamepadButtonList = CoD.Options.CreateButtonList()
+    gamepadTab.buttonList = gamepadButtonList
+    gamepadButtonListContainer:addElement(gamepadButtonList)
+    CoD.OptionsControls.Button_AddChoices_Gamepad(gamepadButtonList:addHardwareProfileLeftRightSelector(
+        Engine.Localize("PLATFORM_ENABLE_GAMEPAD_CAPS"), "gpad_enabled"))
+    if UIExpression.IsInGame() == 1 and UIExpression.DvarBool(nil, "sv_allowAimAssist") == 0 then
+        local targetAssistSelector = gamepadButtonList:addProfileLeftRightSelector(localClientIndex, Engine.Localize(
+            "MENU_TARGET_ASSIST_CAPS"), "somethingalwaysfalse", "Target Assist is disabled on this server.")
+        targetAssistSelector:lock()
+        CoD.Options.Button_AddChoices_EnabledOrDisabled(targetAssistSelector)
+    else
+        local targetAssistSelector = gamepadButtonList:addProfileLeftRightSelector(localClientIndex, Engine.Localize(
+            "MENU_TARGET_ASSIST_CAPS"), "input_targetAssist", Engine.Localize("MENU_TARGET_ASSIST_DESC"))
+        CoD.Options.Button_AddChoices_EnabledOrDisabled(targetAssistSelector)
+    end
+    CoD.Options.Button_AddChoices_EnabledOrDisabled(gamepadButtonList:addProfileLeftRightSelector(localClientIndex,
+        Engine.Localize("MENU_LOOK_INVERSION_CAPS"), "input_invertpitch", Engine.Localize("MENU_LOOK_INVERSION_DESC")))
+    CoD.Options.Button_AddChoices_EnabledOrDisabled(gamepadButtonList:addProfileLeftRightSelector(localClientIndex,
+        Engine.Localize("PLATFORM_CONTROLLER_VIBRATION_CAPS"), "gpad_rumble", Engine.Localize(
+            "PLATFORM_CONTROLLER_VIBRATION_DESC")))
+    if UIExpression.IsDemoPlaying(localClientIndex) ~= 0 then
+        local theaterButtonLayout = gamepadButtonList:addProfileLeftRightSelector(localClientIndex, Engine.Localize(
+            "MENU_THEATER_BUTTON_LAYOUT_CAPS"), "demo_controllerconfig", Engine.Localize(
+            "MENU_THEATER_BUTTON_LAYOUT_DESC"))
+        CoD.ButtonLayout.AddChoices(theaterButtonLayout, localClientIndex)
+        theaterButtonLayout:disableCycling()
+        theaterButtonLayout:registerEventHandler("button_action", CoD.OptionsControls.Button_ButtonLayout)
+    else
+        local gamepadThumbSticksOptions = gamepadButtonList:addProfileLeftRightSelector(localClientIndex,
+            Engine.Localize("MENU_THUMBSTICK_LAYOUT_CAPS"), "gpad_sticksConfig", Engine.Localize(
+                "MENU_THUMBSTICK_LAYOUT_DESC"))
+        CoD.StickLayout.AddChoices(gamepadThumbSticksOptions)
+        gamepadThumbSticksOptions:disableCycling()
+        gamepadThumbSticksOptions:registerEventHandler("button_action", CoD.OptionsControls.Button_StickLayout)
+        local gamepadButtonsOptions = gamepadButtonList:addProfileLeftRightSelector(localClientIndex, Engine.Localize(
+            "MENU_BUTTON_LAYOUT_CAPS"), "gpad_buttonsConfig", Engine.Localize("MENU_BUTTON_LAYOUT_DESC"))
+        CoD.ButtonLayout.AddChoices(gamepadButtonsOptions, localClientIndex)
+        gamepadButtonsOptions:disableCycling()
+        gamepadButtonsOptions:registerEventHandler("button_action", CoD.OptionsControls.Button_ButtonLayout)
+    end
+    CoD.OptionsControls.Button_AddChoices_LookSensitivity(gamepadButtonList:addProfileLeftRightSelector(
+        localClientIndex, Engine.Localize("MENU_LOOK_SENSITIVITY_CAPS"), "input_viewSensitivity",
+        Engine.Localize("PLATFORM_LOOK_SENSITIVITY_DESC")))
+    local GamepadDeadzoneMin = gamepadButtonList:addDvarLeftRightSlider(localClientIndex, "DEADZONE MAX",
+        "gpad_stick_deadzone_max", 0.01, 1, "Stick maximum input threshold.")
+    GamepadDeadzoneMin:setNumericDisplayFormatString("%.2f")
+    GamepadDeadzoneMin:setRoundToFraction(0.01)
+    GamepadDeadzoneMin:setBarSpeed(0.20)
+    local FOVScaleSlider = gamepadButtonList:addDvarLeftRightSlider(localClientIndex, "DEADZONE MIN",
+        "gpad_stick_deadzone_min", 0.2, 1,
+        "Stick minimum input threshold. Lower values make the sticks more responsive to tiny movements.")
+    FOVScaleSlider:setNumericDisplayFormatString("%.2f")
+    FOVScaleSlider:setRoundToFraction(0.01)
+    FOVScaleSlider:setBarSpeed(0.20)
+    return gamepadButtonListContainer
 end
 
-CoD.OptionsControls.OnFinishControls = function ( f13_arg0, f13_arg1 )
-	Engine.Exec( f13_arg1.controller, "updateMustHaveBindings" )
-	if UIExpression.IsInGame() == 1 then
-		Engine.Exec( f13_arg1.controller, "updateVehicleBindings" )
-	end
-	if CoD.useController and Engine.LastInput_Gamepad() then
-		f13_arg0:dispatchEventToRoot( {
-			name = "input_source_changed",
-			controller = f13_arg1.controller,
-			source = 0
-		} )
-	else
-		f13_arg0:dispatchEventToRoot( {
-			name = "input_source_changed",
-			controller = f13_arg1.controller,
-			source = 1
-		} )
-	end
+CoD.OptionsControls.TabChanged = function(controlsWidget, controlsTab)
+    controlsWidget.buttonList = controlsWidget.tabManager.buttonList
+    local child = controlsWidget.buttonList:getFirstChild()
+    while not child.m_focusable do
+        child = child:getNextSibling()
+    end
+    if child ~= nil then
+        child:processEvent({
+            name = "gain_focus"
+        })
+    end
+    CoD.OptionsControls.CurrentTabIndex = controlsTab.tabIndex
 end
 
-CoD.OptionsControls.Back = function ( f14_arg0, f14_arg1 )
-	CoD.OptionsControls.OnFinishControls( f14_arg0, f14_arg1 )
-	CoD.Options.Back( f14_arg0, f14_arg1 )
+CoD.OptionsControls.DefaultPopup_RestoreDefaultControls = function(defaultsPopup, client)
+    Engine.SetProfileVar(client.controller, "input_invertpitch", 0)
+    Engine.SetProfileVar(client.controller, "gpad_rumble", 1)
+    Engine.SetProfileVar(client.controller, "gpad_sticksConfig", CoD.THUMBSTICK_DEFAULT)
+    Engine.SetProfileVar(client.controller, "gpad_buttonsConfig", CoD.BUTTONS_DEFAULT)
+    Engine.SetProfileVar(client.controller, "input_viewSensitivity", CoD.SENSITIVITY_4)
+    Engine.SetProfileVar(client.controller, "mouseSensitivity", 5)
+    local defaultControlsConfig = "default_controls"
+    if CoD.isMultiplayer then
+        defaultControlsConfig = "default_mp_controls"
+    end
+    local language = Engine.GetLanguage()
+    if language then
+        defaultControlsConfig = defaultControlsConfig .. "_" .. language
+    end
+    Engine.ExecNow(client.controller, "exec " .. defaultControlsConfig)
+    Engine.Exec(client.controller, "execcontrollerbindings")
+    Dvar.gpad_stick_deadzone_max:set(0.01)
+    Dvar.gpad_stick_deadzone_min:set(0.2)
+    Engine.SyncHardwareProfileWithDvars()
+    defaultsPopup:goBack(client.controller)
 end
 
-CoD.OptionsControls.CloseMenu = function ( f15_arg0, f15_arg1 )
-	CoD.OptionsControls.OnFinishControls( f15_arg0, f15_arg1 )
-	CoD.Options.CloseMenu( f15_arg0, f15_arg1 )
+CoD.OptionsControls.OnFinishControls = function(menu, client)
+    Engine.Exec(client.controller, "updateMustHaveBindings")
+    if UIExpression.IsInGame() == 1 then
+        Engine.Exec(client.controller, "updateVehicleBindings")
+    end
+    if CoD.useController and Engine.LastInput_Gamepad() then
+        menu:dispatchEventToRoot({
+            name = "input_source_changed",
+            controller = client.controller,
+            source = 0
+        })
+    else
+        menu:dispatchEventToRoot({
+            name = "input_source_changed",
+            controller = client.controller,
+            source = 1
+        })
+    end
 end
 
-CoD.OptionsControls.OpenDefaultPopup = function ( f16_arg0, f16_arg1 )
-	local f16_local0 = f16_arg0:openMenu( "SetDefaultControlsPopup", f16_arg1.controller )
-	f16_local0:registerEventHandler( "confirm_action", CoD.OptionsControls.DefaultPopup_RestoreDefaultControls )
-	f16_arg0:close()
+CoD.OptionsControls.CloseMenu = function(menu, client)
+    CoD.OptionsControls.OnFinishControls(menu, client)
+    CoD.Options.CloseMenu(menu, client)
 end
 
-CoD.OptionsControls.OpenButtonLayout = function ( f17_arg0, f17_arg1 )
-	f17_arg0:saveState()
-	f17_arg0:openMenu( "ButtonLayout", f17_arg1.controller )
-	f17_arg0:close()
+CoD.OptionsControls.OpenDefaultPopup = function(popup, client)
+    local menu = popup:openMenu("SetDefaultControlsPopup", client.controller)
+    menu:registerEventHandler("confirm_action", CoD.OptionsControls.DefaultPopup_RestoreDefaultControls)
+    popup:close()
 end
 
-CoD.OptionsControls.OpenStickLayout = function ( f18_arg0, f18_arg1 )
-	f18_arg0:saveState()
-	f18_arg0:openMenu( "StickLayout", f18_arg1.controller )
-	f18_arg0:close()
+CoD.OptionsControls.OpenButtonLayout = function(buttonLayout, client)
+    buttonLayout:saveState()
+    buttonLayout:openMenu("ButtonLayout", client.controller)
+    buttonLayout:close()
 end
 
-CoD.OptionsControls.Button_StickLayout = function ( f19_arg0, f19_arg1 )
-	f19_arg0:dispatchEventToParent( {
-		name = "open_stick_layout",
-		controller = f19_arg1.controller
-	} )
+CoD.OptionsControls.OpenStickLayout = function(stickLayout, client)
+    stickLayout:saveState()
+    stickLayout:openMenu("StickLayout", client.controller)
+    stickLayout:close()
 end
 
-CoD.OptionsControls.Button_ButtonLayout = function ( f20_arg0, f20_arg1 )
-	f20_arg0:dispatchEventToParent( {
-		name = "open_button_layout",
-		controller = f20_arg1.controller
-	} )
+CoD.OptionsControls.Button_StickLayout = function(gamepadThumbSticksOptions, client)
+    gamepadThumbSticksOptions:dispatchEventToParent({
+        name = "open_stick_layout",
+        controller = client.controller
+    })
 end
 
-LUI.createMenu.OptionsControlsMenu = function ( f21_arg0 )
-	local f21_local0 = nil
-	if UIExpression.IsInGame() == 1 then
-		f21_local0 = CoD.InGameMenu.New( "OptionsControlsMenu", f21_arg0, Engine.Localize( "MENU_CONTROLS_CAPS" ) )
-	else
-		f21_local0 = CoD.Menu.New( "OptionsControlsMenu" )
-		f21_local0:addTitle( Engine.Localize( "MENU_CONTROLS_CAPS" ), LUI.Alignment.Center )
-		if CoD.isSinglePlayer == false then
-			f21_local0:addLargePopupBackground()
-		end
-	end
-	if CoD.isSinglePlayer == true then
-		Engine.SendMenuResponse( f21_arg0, "luisystem", "modal_start" )
-	end
-	f21_local0:setPreviousMenu( "OptionsMenu" )
-	f21_local0:setOwner( f21_arg0 )
-	f21_local0:registerEventHandler( "button_prompt_back", CoD.OptionsControls.Back )
-	f21_local0:registerEventHandler( "restore_default_controls", CoD.OptionsControls.RestoreDefaultControls )
-	f21_local0:registerEventHandler( "tab_changed", CoD.OptionsControls.TabChanged )
-	f21_local0:registerEventHandler( "open_button_layout", CoD.OptionsControls.OpenButtonLayout )
-	f21_local0:registerEventHandler( "open_stick_layout", CoD.OptionsControls.OpenStickLayout )
-	f21_local0:registerEventHandler( "open_default_popup", CoD.OptionsControls.OpenDefaultPopup )
-	f21_local0:addSelectButton()
-	f21_local0:addBackButton()
-	CoD.Options.AddResetPrompt( f21_local0 )
-	local f21_local1 = CoD.Options.SetupTabManager( f21_local0, 800 )
-	f21_local1:addTab( f21_arg0, "MENU_LOOK_CAPS", CoD.OptionsControls.CreateLookTab )
-	f21_local1:addTab( f21_arg0, "MENU_MOVE_CAPS", CoD.OptionsControls.CreateMoveTab )
-	f21_local1:addTab( f21_arg0, "MENU_COMBAT_CAPS", CoD.OptionsControls.CreateCombatTab )
-	f21_local1:addTab( f21_arg0, "MENU_INTERACT_CAPS", CoD.OptionsControls.CreateInteractTab )
-	f21_local1:addTab( f21_arg0, "PLATFORM_GAMEPAD_CAPS", CoD.OptionsControls.CreateGamepadTab )
-	if CoD.OptionsControls.CurrentTabIndex then
-		f21_local1:loadTab( f21_arg0, CoD.OptionsControls.CurrentTabIndex )
-	else
-		f21_local1:refreshTab( f21_arg0 )
-	end
-	return f21_local0
+CoD.OptionsControls.Button_ButtonLayout = function(gamepadButtonsOptions, client)
+    gamepadButtonsOptions:dispatchEventToParent({
+        name = "open_button_layout",
+        controller = client.controller
+    })
 end
 
+LUI.createMenu.OptionsControlsMenu = function(localClientIndex)
+    local controlsWidget = nil
+    if UIExpression.IsInGame() == 1 then
+        controlsWidget = CoD.InGameMenu.New("OptionsControlsMenu", localClientIndex,
+            Engine.Localize("MENU_CONTROLS_CAPS"))
+    else
+        controlsWidget = CoD.Menu.New("OptionsControlsMenu")
+        controlsWidget:addTitle(Engine.Localize("MENU_CONTROLS_CAPS"), LUI.Alignment.Center)
+        controlsWidget:addLargePopupBackground()
+    end
+    controlsWidget:setPreviousMenu("OptionsMenu")
+    controlsWidget:setOwner(localClientIndex)
+    controlsWidget:registerEventHandler("button_prompt_back", CoD.OptionsControls.Back)
+    controlsWidget:registerEventHandler("restore_default_controls", CoD.OptionsControls.RestoreDefaultControls)
+    controlsWidget:registerEventHandler("tab_changed", CoD.OptionsControls.TabChanged)
+    controlsWidget:registerEventHandler("open_button_layout", CoD.OptionsControls.OpenButtonLayout)
+    controlsWidget:registerEventHandler("open_stick_layout", CoD.OptionsControls.OpenStickLayout)
+    controlsWidget:registerEventHandler("open_default_popup", CoD.OptionsControls.OpenDefaultPopup)
+    controlsWidget:addSelectButton()
+    controlsWidget:addBackButton()
+    CoD.Options.AddResetPrompt(controlsWidget)
+    local controlsTabs = CoD.Options.SetupTabManager(controlsWidget, 800)
+    controlsTabs:addTab(localClientIndex, "MENU_LOOK_CAPS", CoD.OptionsControls.CreateLookTab)
+    controlsTabs:addTab(localClientIndex, "MENU_MOVE_CAPS", CoD.OptionsControls.CreateMoveTab)
+    controlsTabs:addTab(localClientIndex, "MENU_COMBAT_CAPS", CoD.OptionsControls.CreateCombatTab)
+    controlsTabs:addTab(localClientIndex, "MENU_INTERACT_CAPS", CoD.OptionsControls.CreateInteractTab)
+    controlsTabs:addTab(localClientIndex, "PLATFORM_GAMEPAD_CAPS", CoD.OptionsControls.CreateGamepadTab)
+    if CoD.OptionsControls.CurrentTabIndex then
+        controlsTabs:loadTab(localClientIndex, CoD.OptionsControls.CurrentTabIndex)
+    else
+        controlsTabs:refreshTab(localClientIndex)
+    end
+    return controlsWidget
+end

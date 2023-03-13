@@ -667,7 +667,7 @@ function UpdateGameScoreboard( f18_arg0 )
 		if Engine.IsSplitscreen() == false or f18_arg0.forcedFullscreen == true then
 			if f18_local4 <= 13 then
 				f18_arg0:setTopBottom( false, false, -f0_local36 / 2 + f0_local41, f0_local36 / 2 )
-				goto basicblock_79:
+				--goto basicblock_79:
 			elseif not f18_arg0.frontEndOnly then
 				f18_arg0:setTopBottom( false, false, -CoD.SDSafeHeight / 2 + f0_local41, CoD.SDSafeHeight / 2 )
 				while f18_local4 <= #f18_local2 do
@@ -766,7 +766,7 @@ function UpdateTheaterScoreboard( f19_arg0 )
 		if Engine.IsSplitscreen() == false or f19_arg0.forcedFullscreen ~= true then
 			if f19_local3 <= 13 then
 				f19_arg0:setTopBottom( false, false, -f0_local36 / 2 + f0_local41, f0_local36 / 2 )
-				goto basicblock_45:
+				--goto basicblock_45:
 			elseif not f19_arg0.frontEndOnly then
 				f19_arg0:setTopBottom( false, false, -CoD.SDSafeHeight / 2 + f0_local41, CoD.SDSafeHeight / 2 )
 				while f19_local3 <= #f19_local1 do
